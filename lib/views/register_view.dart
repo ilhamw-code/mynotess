@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-
 import 'dart:developer' as dev show log;
-
 import 'package:note/constans/routes.dart';
 
 class RegisterView extends StatefulWidget {
