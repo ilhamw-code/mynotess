@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:note/constans/routes.dart';
@@ -62,7 +62,7 @@ class _RegisterViewState extends State<RegisterView> {
                   password: password,
                 );
                 final user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification(); 
+                await user?.sendEmailVerification();
                 Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'invalid-email') {
