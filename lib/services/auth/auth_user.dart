@@ -9,4 +9,6 @@ class AuthUser {
 
 // akan menginisialisasi class user dan akan mengembalikan nilai keAuth user
   factory AuthUser.fromFirebase(User user) => AuthUser(user.emailVerified);
+
+  sendEmailVerification() {}
 }
