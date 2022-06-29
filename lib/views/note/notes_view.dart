@@ -75,7 +75,10 @@ class _NotesViewState extends State<NotesView> {
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return const Text('Waiting forr all Note...');
+                      case ConnectionState.active:
+                        //pastikan koneksinya selalu aktif untuk memasikan setiap note yang
+                        //ditambahkan selalu update
+                        return const Text('Waiting for all Note...');
                       default:
                         const CircularProgressIndicator();
                     }
