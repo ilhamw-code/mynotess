@@ -12,7 +12,14 @@ class NotesServices {
 
   // 3 baris ini akan menjadikan class to Singgleton agar tidak memenuhi Ram
   static final NotesServices _shared = NotesServices._sharedInstance();
-  NotesServices._sharedInstance();
+  NotesServices._sharedInstance() {
+    // mengatur aliran stream agar note tetap ter catat dalam database
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      onListen: () {
+        _notesStreamController.sink.add(_notes);
+      },
+    );
+  }
   factory NotesServices() => _shared;
 
   Future<DatabaseUser> getOrCreateUser({required String email}) async {
@@ -29,9 +36,8 @@ class NotesServices {
     }
   }
 
-  final _notesStreamController =
-      //ini akan mengontrol seluruh aktivitas List dari note yang masuk melalui Stream notes.
-      StreamController<List<DatabaseNote>>.broadcast();
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
+  //ini akan mengontrol seluruh aktivitas List dari note yang masuk melalui Stream notes.
 
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
@@ -245,13 +251,9 @@ class NotesServices {
       final dbPath = join(docsPath.path, dbName); // ini akan mengambil dbnote
       final db = await openDatabase(dbPath);
       _db = db;
-
       // create the user table
-
       await db.execute(createUserTable);
-
       //create the note table
-
       await db.execute(createNoteTable);
       await _cacheNotes();
     } on MissingPlatformDirectoryException {
@@ -305,6 +307,7 @@ class DatabaseNote {
         text = map[textColumn] as String,
         isSyncWithCloud =
             (map[isSyncedWithCloudColumn] as int) == 1 ? true : false;
+
   // Sync ini bertipe bool jadi lansung kita eksekusi dengan true atau false;
 
   @override
