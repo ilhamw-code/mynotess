@@ -78,7 +78,6 @@ class _NotesViewState extends State<NotesView> {
                             itemCount: allNotes.length,
                             itemBuilder: (context, index) {
                               final note = allNotes[index];
-                              print(note);
                               return ListTile(
                                 title: Text(
                                   note.text,

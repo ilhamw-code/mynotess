@@ -10,7 +10,6 @@ class NotesServices {
 
   List<DatabaseNote> _notes = [];
 
-  // 3 baris ini akan menjadikan class to Singgleton agar tidak memenuhi Ram
   static final NotesServices _shared = NotesServices._sharedInstance();
   NotesServices._sharedInstance() {
     // mengatur aliran stream agar note tetap ter catat dalam database
@@ -21,6 +20,9 @@ class NotesServices {
     );
   }
   factory NotesServices() => _shared;
+
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
+  //ini akan mengontrol seluruh aktivitas List dari note yang masuk melalui Stream notes.
 
   Future<DatabaseUser> getOrCreateUser({required String email}) async {
     try {
@@ -35,9 +37,6 @@ class NotesServices {
       rethrow;
     }
   }
-
-  late final StreamController<List<DatabaseNote>> _notesStreamController;
-  //ini akan mengontrol seluruh aktivitas List dari note yang masuk melalui Stream notes.
 
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
@@ -66,7 +65,7 @@ class NotesServices {
       final updateNote = await getNote(id: note.id);
       _notes.removeWhere((note) => note.id == updateNote.id);
       // delete chace yang ada sebelummnya
-      _notes.add(note);
+      _notes.add(updateNote);
       _notesStreamController.add(_notes);
       return updateNote;
     }
