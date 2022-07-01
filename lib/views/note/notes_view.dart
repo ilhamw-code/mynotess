@@ -76,6 +76,7 @@ class _NotesViewState extends State<NotesView> {
                         //ditambahkan selalu update
                         if (snapshot.hasData) {
                           final allNotes = snapshot.data as List<DatabaseNote>;
+
                           return NoteListView(
                             notes: allNotes,
                             onDeleteNote: (note) async {
