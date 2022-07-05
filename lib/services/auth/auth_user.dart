@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 
 @immutable
 class AuthUser {
+  final String id;
   // give field untuk email agar bisa di data pada DB
-  final String? email;
+  final String email;
   final bool isEmailVerified;
 
   const AuthUser({
+    required this.id,
     required this.email,
     required this.isEmailVerified,
   });
@@ -15,6 +17,7 @@ class AuthUser {
 // akan menginisialisasi class user dan akan mengembalikan nilai keAuth user
   factory AuthUser.fromFirebase(User user) => AuthUser(
         isEmailVerified: user.emailVerified,
-        email: user.email,
+        email: user.email!,
+        id: user.uid,
       );
 }
