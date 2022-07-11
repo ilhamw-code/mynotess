@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
 import 'package:note/constans/routes.dart';
 import 'package:note/enums/menu_action.dart';
 import 'package:note/services/auth/auth_service.dart';
+import 'package:note/services/auth/bloc/auth_bloc.dart';
 import 'package:note/services/cloud/cloud_note.dart';
 import 'package:note/services/cloud/firebase_cloud_storage.dart';
 import 'package:note/utilities/dialog/logout_diolog.dart';
@@ -42,11 +44,9 @@ class _NotesViewState extends State<NotesView> {
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
                     // karna tipe bolean jadi bisa lansung gak pakei persamaan
-                    await AuthService.firebase().logOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (route) => false,
-                    );
+                    context.read<AuthBloc>().add(
+                          const AuthEventLogOut(),
+                        );
                   }
                   break;
               }
