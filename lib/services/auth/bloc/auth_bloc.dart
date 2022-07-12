@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'package:note/services/auth/auth_provider.dart';
 import 'package:note/services/auth/auth_user.dart';
 
@@ -13,7 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await provider.initialize();
       final user = provider.currentUser;
       if (user == null) {
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(null));
       } else if (!user.isEmailVerified) {
         emit(const AuthStateNeedVerification());
       } else {
@@ -22,7 +22,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     //log In
     on<AuthEventLogIn>((event, emit) async {
-      emit(const AuthStateLoading());
       final email = event.email;
       final password = event.password;
       try {
@@ -32,7 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         emit(AuthStateLoggedIn(user));
       } on Exception catch (e) {
-        emit(AuthStateLoginFailure(e));
+        emit(AuthStateLoggedOut(e));
       }
     });
     //log out
@@ -40,7 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         emit(const AuthStateLoading());
         await provider.logOut();
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(null));
       } on Exception catch (e) {
         emit(AuthStateLogOutFailure(e));
       }

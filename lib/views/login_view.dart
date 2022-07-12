@@ -51,35 +51,33 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             decoration: const InputDecoration(hintText: 'Enter Your Password'),
           ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if (state is AuthStateLoggedOut) {
+                if (state.exception is UserNotFoundAuthException) {
+                  await showDialogError(context, 'User Not Found');
+                }
+                if (state.exception is WrongPasswordAuthException) {
+                  await showDialogError(context, 'Wrong Password');
+                }
+                if (state.exception is GenericAuthException) {
+                  await showDialogError(context, 'Sorry You Have an Error');
+                }
+              }
+            },
+            child: TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
                 context.read<AuthBloc>().add(
                       AuthEventLogIn(
                         email,
                         password,
                       ),
                     );
-              } on UserNotFoundAuthException {
-                await showDialogError(
-                  context,
-                  'User Not found',
-                );
-              } on WrongPasswordAuthException {
-                await showDialogError(
-                  context,
-                  'Wrong Password',
-                );
-              } on GenericAuthException {
-                await showDialogError(
-                  context,
-                  'Authentication Error',
-                );
-              }
-            },
-            child: const Text('Login'),
+              },
+              child: const Text('Login'),
+            ),
           ),
           TextButton(
             onPressed: () {
