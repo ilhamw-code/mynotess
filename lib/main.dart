@@ -4,6 +4,7 @@ import 'package:note/constans/routes.dart';
 import 'package:note/helper/loading/loading_screen.dart';
 import 'package:note/services/auth/bloc/auth_bloc.dart';
 import 'package:note/services/auth/firebase_auth_provider.dart';
+import 'package:note/views/forgot_password_view.dart';
 import 'package:note/views/login_view.dart';
 import 'package:note/views/note/create_update_view.dart';
 import 'package:note/views/note/notes_view.dart';
@@ -64,6 +65,8 @@ class HomePage extends StatelessWidget {
           return const LoginView();
         } else if (state is AuthStateregistering) {
           return const RegisterView();
+        } else if (state is AuthStateForgotPassword) {
+          return const ForgotPassword();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),
