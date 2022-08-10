@@ -30,13 +30,9 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: const Text('Your Notes'),
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-              },
-              icon: const Icon(Icons.add)),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               switch (value) {
@@ -87,13 +83,26 @@ class _NotesViewState extends State<NotesView> {
                   },
                 );
               } else {
-                return const CircularProgressIndicator();
+                return const Center(
+                    child: CircularProgressIndicator(color: Colors.teal));
               }
 
             default:
-              const CircularProgressIndicator();
+              const Center(
+                  child: CircularProgressIndicator(color: Colors.teal));
           }
-          return const CircularProgressIndicator();
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.teal),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: 10,
+        label: const Text('Create Note'),
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.teal,
+        onPressed: () {
+          Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
         },
       ),
     );

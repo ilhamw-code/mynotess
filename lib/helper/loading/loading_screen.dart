@@ -63,7 +63,7 @@ class LoadingScreen {
                       const SizedBox(
                         height: 10,
                       ),
-                      const CircularProgressIndicator(),
+                      const CircularProgressIndicator(color: Colors.teal),
                       const SizedBox(
                         height: 20,
                       ),

@@ -10,7 +10,7 @@ CloaseDialog showLoadingDialog({
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const CircularProgressIndicator(),
+        const CircularProgressIndicator(color: Colors.teal),
         const SizedBox(height: 10.0),
         Text(text)
       ],

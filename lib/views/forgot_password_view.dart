@@ -43,6 +43,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.teal,
           title: const Text('Reset Password'),
         ),
         body: Padding(
@@ -51,13 +52,26 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Text(
-                  'If you forgot password, simply enter your email and we will send you a password reset link'),
+                'If you forgot password, It simply enter your email and we will send you a password reset link',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
               TextField(
                 controller: _controller,
                 autocorrect: false,
                 autofocus: true,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(hintText: 'Your Valid Email'),
+                decoration: const InputDecoration(
+                  hintText: 'Your Valid Email',
+                  focusColor: Colors.teal,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                  ),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -66,9 +80,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       .read<AuthBloc>()
                       .add(AuthEventForgotPassword(email: email));
                 },
-                child: const Text('Send Me Reset Password'),
+                child: const Text(
+                  'Send Me Reset Password',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-              TextButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    elevation: 3.0,
+                    minimumSize: const Size(300, 50),
+                    primary: Colors.teal),
                 onPressed: () {
                   context.read<AuthBloc>().add(
                         const AuthEventLogOut(),

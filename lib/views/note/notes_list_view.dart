@@ -40,7 +40,10 @@ class NoteListView extends StatelessWidget {
                 onDeleteNote(note);
               }
             },
-            icon: const Icon(Icons.delete),
+            icon: const Icon(
+              Icons.takeout_dining,
+              color: Colors.teal,
+            ),
           ),
         );
       },

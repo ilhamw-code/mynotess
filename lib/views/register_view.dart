@@ -46,57 +46,141 @@ class _RegisterViewState extends State<RegisterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Register'),
-        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Enter your email and pasword to see your Note!'),
-              TextField(
-                controller: _email,
-                autocorrect: false,
-                autofocus: true,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(hintText: 'Email'),
-              ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration:
-                    const InputDecoration(hintText: 'Enter Your Password'),
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
-
-                        context.read<AuthBloc>().add(AuthEventRegister(
-                              email,
-                              password,
-                            ));
-                      },
-                      child: const Text('Register'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<AuthBloc>().add(
-                              const AuthEventLogOut(),
-                            );
-                      },
-                      child: const Text('Already Registered? Login here'),
-                    )
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 50,
                 ),
-              ),
-            ],
+                const Text(
+                  'Register Here',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextField(
+                  controller: _email,
+                  autocorrect: false,
+                  autofocus: true,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    suffixIcon: const Icon(
+                      Icons.email,
+                      color: Colors.teal,
+                    ),
+                    labelText: 'Email',
+                    labelStyle: const TextStyle(
+                      color: Colors.teal,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.teal, width: 2.0),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      borderSide: BorderSide(
+                          color: Colors.teal,
+                          style: BorderStyle.solid,
+                          width: 2.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                TextField(
+                  controller: _password,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    suffixIcon: const Icon(
+                      Icons.vpn_key,
+                      color: Colors.teal,
+                    ),
+                    labelText: 'Password',
+                    labelStyle: const TextStyle(
+                      color: Colors.teal,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.teal, width: 2.0),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      borderSide: BorderSide(
+                          color: Colors.teal,
+                          style: BorderStyle.solid,
+                          width: 2.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 3.0,
+                            minimumSize: const Size(300, 50),
+                            primary: Colors.teal),
+                        onPressed: () async {
+                          final email = _email.text;
+                          final password = _password.text;
+
+                          context.read<AuthBloc>().add(AuthEventRegister(
+                                email,
+                                password,
+                              ));
+                        },
+                        child: const Text(
+                          'Register',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.read<AuthBloc>().add(
+                                const AuthEventLogOut(),
+                              );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              'Already Registered? ',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Text(
+                              'Login here',
+                              style: TextStyle(
+                                  color: Colors.teal,
+                                  fontWeight: FontWeight.w800,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
